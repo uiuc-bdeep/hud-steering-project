@@ -7,6 +7,7 @@
 #   Edited on 03/02/2018 to create descriptives table with updated dataset and additional variables  #
 #   Edited on 03/07/2018 to ensure that descriptives table and balance table show the same variables #
 #   Edited on 05/30/2018 to create column for all racial groups, add Assaults and Elem Sch Score     #
+#   Edited on 05/30/2018 to replace Respiratory Hazard Index with Particulate Matter                 #
 # -------------------------------------------------------------------------------------------------- #
 
 # Clear workspace
@@ -73,7 +74,7 @@ homes <- homes[,c("APRACE",
                   "povrate_Ad",
                   "college_Ad",
                   "skill_Ad",
-                  "RespiratoryHazardIndex_Ad")]
+                  "Atmospheric_Matter")]
 
 # Testers Dataset 
 
@@ -310,7 +311,7 @@ rownames(homes.summary)[which(rownames(homes.summary) == "DPMTEXP.3")] <- "Inher
 rownames(homes.summary)[which(rownames(homes.summary) == "DPMTEXP.4")] <- "Equity from previous home"
 
 rownames(homes.summary)[which(rownames(homes.summary) == "SFcount_Ad")] <- "Superfund Sites"
-rownames(homes.summary)[which(rownames(homes.summary) == "RespiratoryHazardIndex_Ad")] <- "Respiratory Hazard Index"
+rownames(homes.summary)[which(rownames(homes.summary) == "Atmospheric_Matter")] <- "Particulate Matter"
 rownames(homes.summary)[which(rownames(homes.summary) == "RSEI_Ad")] <- "Risk-Screening Env. Indicators"
 
 # Neighborhood Characteristics
