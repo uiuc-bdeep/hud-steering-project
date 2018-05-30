@@ -5,6 +5,7 @@
 #   Date created: 1/23/2018                                                                      #
 #   Edited on:    3/7/2018                                                                       #
 #   Edited on 05/30/2018 to add Assault and Elementary School Score                              #
+#   Edited on 05/30/2018 to replace Respiratory Hazard Index with Particulate Matter             #
 # ---------------------------------------------------------------------------------------------- #
 
 # Clear workspace
@@ -1937,10 +1938,10 @@ rm(p1)
 
 # Respiratory Hazard Index
 
-p2 <- felm(RespiratoryHazardIndex_Ad ~ APRACE | CONTROL | 0 | CONTROL, data = homes)
+p2 <- felm(Atmospheric_Matter ~ APRACE | CONTROL | 0 | CONTROL, data = homes)
 
 p2.coef <- as.data.frame(coef(summary(p2)))
-names(p2.coef)[which(names(p2.coef) == "Estimate")] <- "Respiratory Hazard Index"
+names(p2.coef)[which(names(p2.coef) == "Estimate")] <- "Particulate Matter"
 p2.coef <- as.data.frame(t(p2.coef))
 
 rm(p2)
