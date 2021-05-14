@@ -6,6 +6,7 @@
 #   Edited on:    3/7/2018                                                                       #
 #   Edited on 05/30/2018 to add Assault and Elementary School Score                              #
 #   Edited on 05/30/2018 to replace Respiratory Hazard Index with Particulate Matter             #
+#   Edited on 05/14/2021 to remove all specifications without CONTROL variable                   #
 # ---------------------------------------------------------------------------------------------- #
 
 # Clear workspace
@@ -79,25 +80,11 @@ t1.coef <- as.data.frame(t(t1.coef))
 
 rm(t1)
 
-# without CONTROL to demonstrate the effect of tester characteristics without assigning tester pairs
-
-t1 <- felm(SEQUENCE.1 ~ APRACE, data = testers)
-
-t1.coef <- as.data.frame(coef(summary(t1)))
-names(t1.coef)[which(names(t1.coef) == "Estimate")] <- "Percent Tester Went First"
-t1.coef <- as.data.frame(t(t1.coef))
-
-
 # Generate table
 
 # Drop race category 'Other'
 
 t1.coef$APRACE5 <- NULL
-
-# without CONTROL
-# Drop (Intercept)
-
-t1.coef$`(Intercept)` <- NULL
 
 # Convert into LaTeX using stargazer
 
@@ -110,20 +97,6 @@ stargazer(t1.coef,
                                "Hispanic",
                                "Asian"),
           out = paste0(out, "test-sequence.tex"))
-
-# without CONTROL
-
-stargazer(t1.coef,
-          type = "latex",
-          title = "Balance Statistics for Advertised Homes by Race",
-          summary = FALSE,
-          df = FALSE,
-          covariate.labels = c("Variable",
-                               "African American",
-                               "Hispanic",
-                               "Asian"))
-
-
 
 # Month of Test --------------------------------------------------------------------------------
 
@@ -451,11 +424,6 @@ t5.coef <- as.data.frame(t(t5.coef))
 
 t5.coef$APRACE5 <- NULL
 
-# without CONTROL
-# Drop (Intercept)
-
-t5.coef$`(Intercept)` <- NULL
-
 # Convert into LaTeX using stargazer
 
 stargazer(t5.coef,
@@ -468,20 +436,6 @@ stargazer(t5.coef,
                                "Asian"),
           out = paste0(out, "gender.tex"))
 
-# without CONTROL
-
-stargazer(t5.coef,
-          type = "latex",
-          title = "Balance Statistics for Advertised Homes by Race",
-          summary = FALSE,
-          df = FALSE,
-          covariate.labels = c("Variable",
-                               "African American",
-                               "Hispanic",
-                               "Asian"))
-
-
-
 # Age ------------------------------------------------------------------------------------------
 
 t6 <- felm(age ~ APRACE | CONTROL | 0 | CONTROL, data = testers)
@@ -492,14 +446,6 @@ t6.coef <- as.data.frame(t(t6.coef))
 
 rm(t6)
 
-# without CONTROL to demonstrate the effect of tester characteristics without assigning tester pairs
-
-t6 <- felm(age ~ APRACE, data = testers)
-
-t6.coef <- as.data.frame(coef(summary(t6)))
-names(t6.coef)[which(names(t6.coef) == "Estimate")] <- "Age"
-t6.coef <- as.data.frame(t(t6.coef))
-
 
 # Generate table
 
@@ -507,10 +453,6 @@ t6.coef <- as.data.frame(t(t6.coef))
 
 t6.coef$APRACE5 <- NULL
 
-# without CONTROL
-# Drop (Intercept)
-
-t6.coef$`(Intercept)` <- NULL
 
 # Convert into LaTeX using stargazer
 
@@ -523,19 +465,6 @@ stargazer(t6.coef,
                                "Hispanic",
                                "Asian"),
           out = paste0(out, "age.tex"))
-
-
-# without CONTROL
-
-stargazer(t6.coef,
-          type = "latex",
-          title = "Balance Statistics for Advertised Homes by Race",
-          summary = FALSE,
-          df = FALSE,
-          covariate.labels = c("Variable",
-                               "African American",
-                               "Hispanic",
-                               "Asian"))
 
 
 # Income ---------------------------------------------------------------------------------------
@@ -557,15 +486,6 @@ t7.1.coef <- as.data.frame(t(t7.1.coef))
 
 rm(t7.1)
 
-# without CONTROL to demonstrate the effect of tester characteristics without assigning tester pairs
-
-t7.1 <- felm(TPEGAI.1 ~ APRACE, data = testers)
-
-t7.1.coef <- as.data.frame(coef(summary(t7.1)))
-names(t7.1.coef)[which(names(t7.1.coef) == "Estimate")] <- "Under $10,000"
-t7.1.coef <- as.data.frame(t(t7.1.coef))
-
-
 # 2 = $10,000 - $19,999
 
 t7.2 <- felm(TPEGAI.2 ~ APRACE | CONTROL | 0 | CONTROL, data = testers)
@@ -575,15 +495,6 @@ names(t7.2.coef)[which(names(t7.2.coef) == "Estimate")] <- "$10,000 - $19,999"
 t7.2.coef <- as.data.frame(t(t7.2.coef))
 
 rm(t7.2)
-
-# without CONTROL to demonstrate the effect of tester characteristics without assigning tester pairs
-
-t7.2 <- felm(TPEGAI.2 ~ APRACE, data = testers)
-
-t7.2.coef <- as.data.frame(coef(summary(t7.2)))
-names(t7.2.coef)[which(names(t7.2.coef) == "Estimate")] <- "$10,000 - $19,999"
-t7.2.coef <- as.data.frame(t(t7.2.coef))
-
 
 # 3 = $20,000 - $29,999
 
@@ -595,15 +506,6 @@ t7.3.coef <- as.data.frame(t(t7.3.coef))
 
 rm(t7.3)
 
-# without CONTROL to demonstrate the effect of tester characteristics without assigning tester pairs
-
-t7.3 <- felm(TPEGAI.3 ~ APRACE, data = testers)
-
-t7.3.coef <- as.data.frame(coef(summary(t7.3)))
-names(t7.3.coef)[which(names(t7.3.coef) == "Estimate")] <- "$20,000 - $29,999"
-t7.3.coef <- as.data.frame(t(t7.3.coef))
-
-
 # 4 = $30,000 - $39,999
 
 t7.4 <- felm(TPEGAI.4 ~ APRACE | CONTROL | 0 | CONTROL, data = testers)
@@ -613,15 +515,6 @@ names(t7.4.coef)[which(names(t7.4.coef) == "Estimate")] <- "$30,000 - $39,999"
 t7.4.coef <- as.data.frame(t(t7.4.coef))
 
 rm(t7.4)
-
-# without CONTROL to demonstrate the effect of tester characteristics without assigning tester pairs
-
-t7.4 <- felm(TPEGAI.4 ~ APRACE, data = testers)
-
-t7.4.coef <- as.data.frame(coef(summary(t7.4)))
-names(t7.4.coef)[which(names(t7.4.coef) == "Estimate")] <- "$30,000 - $39,999"
-t7.4.coef <- as.data.frame(t(t7.4.coef))
-
 
 # 5 = $40,000 - $49,999
 
@@ -633,15 +526,6 @@ t7.5.coef <- as.data.frame(t(t7.5.coef))
 
 rm(t7.5)
 
-# without CONTROL to demonstrate the effect of tester characteristics without assigning tester pairs
-
-t7.5 <- felm(TPEGAI.5 ~ APRACE, data = testers)
-
-t7.5.coef <- as.data.frame(coef(summary(t7.5)))
-names(t7.5.coef)[which(names(t7.5.coef) == "Estimate")] <- "$40,000 - $49,999"
-t7.5.coef <- as.data.frame(t(t7.5.coef))
-
-
 # 6 = $50,000 - $74,999
 
 t7.6 <- felm(TPEGAI.6 ~ APRACE | CONTROL | 0 | CONTROL, data = testers)
@@ -651,15 +535,6 @@ names(t7.6.coef)[which(names(t7.6.coef) == "Estimate")] <- "$50,000 - $74,999"
 t7.6.coef <- as.data.frame(t(t7.6.coef))
 
 rm(t7.6)
-
-# without CONTROL to demonstrate the effect of tester characteristics without assigning tester pairs
-
-t7.6 <- felm(TPEGAI.6 ~ APRACE, data = testers)
-
-t7.6.coef <- as.data.frame(coef(summary(t7.6)))
-names(t7.6.coef)[which(names(t7.6.coef) == "Estimate")] <- "$50,000 - $74,999"
-t7.6.coef <- as.data.frame(t(t7.6.coef))
-
 
 # 7 = $75,000 - 99,999
 
@@ -671,15 +546,6 @@ t7.7.coef <- as.data.frame(t(t7.7.coef))
 
 rm(t7.7)
 
-# without CONTROL to demonstrate the effect of tester characteristics without assigning tester pairs
-
-t7.7 <- felm(TPEGAI.7 ~ APRACE, data = testers)
-
-t7.7.coef <- as.data.frame(coef(summary(t7.7)))
-names(t7.7.coef)[which(names(t7.7.coef) == "Estimate")] <- "$75,000 - $99,999"
-t7.7.coef <- as.data.frame(t(t7.7.coef))
-
-
 # 8 = $100,000 or more
 
 t7.8 <- felm(TPEGAI.8 ~ APRACE | CONTROL | 0 | CONTROL, data = testers)
@@ -689,15 +555,6 @@ names(t7.8.coef)[which(names(t7.8.coef) == "Estimate")] <- "$100,000 or more"
 t7.8.coef <- as.data.frame(t(t7.8.coef))
 
 rm(t7.8)
-
-# without CONTROL to demonstrate the effect of tester characteristics without assigning tester pairs
-
-t7.8 <- felm(TPEGAI.8 ~ APRACE, data = testers)
-
-t7.8.coef <- as.data.frame(coef(summary(t7.8)))
-names(t7.8.coef)[which(names(t7.8.coef) == "Estimate")] <- "$100,000 or more"
-t7.8.coef <- as.data.frame(t(t7.8.coef))
-
 
 # Generate table
 
@@ -715,10 +572,6 @@ t7.coef <- rbind(t7.1.coef,
 # Drop race category 'Other'
 
 t7.coef$APRACE5 <- NULL
-
-# Drop (Intercept)
-
-t7.coef$`(Intercept)` <- NULL
 
 # Convert into LaTeX using stargazer
 
@@ -923,14 +776,6 @@ t9.1.coef <- as.data.frame(t(t9.1.coef))
 
 rm(t9.1)
 
-# without CONTROL to demonstrate the effect of tester characteristics without assigning tester pairs
-
-t9.1 <- felm(THIGHEDU.1 ~ APRACE, data = testers)
-
-t9.1.coef <- as.data.frame(coef(summary(t9.1)))
-names(t9.1.coef)[which(names(t9.1.coef) == "Estimate")] <- "Grade School Or Less"
-t9.1.coef <- as.data.frame(t(t9.1.coef))
-
 # 2 = Attended High School
 
 t9.2 <- felm(THIGHEDU.2 ~ APRACE | CONTROL | 0 | CONTROL, data = testers)
@@ -940,15 +785,6 @@ names(t9.2.coef)[which(names(t9.2.coef) == "Estimate")] <- "Attended High School
 t9.2.coef <- as.data.frame(t(t9.2.coef))
 
 rm(t9.2)
-
-# without CONTROL to demonstrate the effect of tester characteristics without assigning tester pairs
-
-t9.2 <- felm(THIGHEDU.2 ~ APRACE, data = testers)
-
-t9.2.coef <- as.data.frame(coef(summary(t9.2)))
-names(t9.2.coef)[which(names(t9.2.coef) == "Estimate")] <- "Attended High School"
-t9.2.coef <- as.data.frame(t(t9.2.coef))
-
 
 # 3 = GED
 
@@ -960,15 +796,6 @@ t9.3.coef <- as.data.frame(t(t9.3.coef))
 
 rm(t9.3)
 
-# without CONTROL to demonstrate the effect of tester characteristics without assigning tester pairs
-
-t9.3 <- felm(THIGHEDU.3 ~ APRACE, data = testers)
-
-t9.3.coef <- as.data.frame(coef(summary(t9.3)))
-names(t9.3.coef)[which(names(t9.3.coef) == "Estimate")] <- "GED"
-t9.3.coef <- as.data.frame(t(t9.3.coef))
-
-
 # 4 = High School Diploma
 
 t9.4 <- felm(THIGHEDU.4 ~ APRACE | CONTROL | 0 | CONTROL, data = testers)
@@ -978,15 +805,6 @@ names(t9.4.coef)[which(names(t9.4.coef) == "Estimate")] <- "High School Diploma"
 t9.4.coef <- as.data.frame(t(t9.4.coef))
 
 rm(t9.4)
-
-# without CONTROL to demonstrate the effect of tester characteristics without assigning tester pairs
-
-t9.4 <- felm(THIGHEDU.4 ~ APRACE, data = testers)
-
-t9.4.coef <- as.data.frame(coef(summary(t9.4)))
-names(t9.4.coef)[which(names(t9.4.coef) == "Estimate")] <- "High School Diploma"
-t9.4.coef <- as.data.frame(t(t9.4.coef))
-
 
 # 5 = Attended Vocational / Technical School
 
@@ -998,15 +816,6 @@ t9.5.coef <- as.data.frame(t(t9.5.coef))
 
 rm(t9.5)
 
-# without CONTROL to demonstrate the effect of tester characteristics without assigning tester pairs
-
-t9.5 <- felm(THIGHEDU.5 ~ APRACE, data = testers)
-
-t9.5.coef <- as.data.frame(coef(summary(t9.5)))
-names(t9.5.coef)[which(names(t9.5.coef) == "Estimate")] <- "Attended Vocational / Technical School"
-t9.5.coef <- as.data.frame(t(t9.5.coef))
-
-
 # 6 = Vocational / Technical School Diploma
 
 t9.6 <- felm(THIGHEDU.6 ~ APRACE | CONTROL | 0 | CONTROL, data = testers)
@@ -1016,15 +825,6 @@ names(t9.6.coef)[which(names(t9.6.coef) == "Estimate")] <- "Vocational / Technic
 t9.6.coef <- as.data.frame(t(t9.6.coef))
 
 rm(t9.6)
-
-# without CONTROL to demonstrate the effect of tester characteristics without assigning tester pairs
-
-t9.6 <- felm(THIGHEDU.6 ~ APRACE, data = testers)
-
-t9.6.coef <- as.data.frame(coef(summary(t9.6)))
-names(t9.6.coef)[which(names(t9.6.coef) == "Estimate")] <- "Vocational / Technical School Diploma"
-t9.6.coef <- as.data.frame(t(t9.6.coef))
-
 
 # 7 = Attended College
 
@@ -1036,15 +836,6 @@ t9.7.coef <- as.data.frame(t(t9.7.coef))
 
 rm(t9.7)
 
-# without CONTROL to demonstrate the effect of tester characteristics without assigning tester pairs
-
-t9.7 <- felm(THIGHEDU.7 ~ APRACE, data = testers)
-
-t9.7.coef <- as.data.frame(coef(summary(t9.7)))
-names(t9.7.coef)[which(names(t9.7.coef) == "Estimate")] <- "Attended College"
-t9.7.coef <- as.data.frame(t(t9.7.coef))
-
-
 # 8 = Associate's Degree
 
 t9.8 <- felm(THIGHEDU.8 ~ APRACE | CONTROL | 0 | CONTROL, data = testers)
@@ -1055,15 +846,6 @@ t9.8.coef <- as.data.frame(t(t9.8.coef))
 
 rm(t9.8)
 
-# without CONTROL to demonstrate the effect of tester characteristics without assigning tester pairs
-
-t9.8 <- felm(THIGHEDU.8 ~ APRACE, data = testers)
-
-t9.8.coef <- as.data.frame(coef(summary(t9.8)))
-names(t9.8.coef)[which(names(t9.8.coef) == "Estimate")] <- "Associate's Degree"
-t9.8.coef <- as.data.frame(t(t9.8.coef))
-
-
 # 9 = Bachelor's Degree 
 
 t9.9 <- felm(THIGHEDU.9 ~ APRACE | CONTROL | 0 | CONTROL, data = testers)
@@ -1073,14 +855,6 @@ names(t9.9.coef)[which(names(t9.9.coef) == "Estimate")] <- "Bachelor's Degree"
 t9.9.coef <- as.data.frame(t(t9.9.coef))
 
 rm(t9.9)
-
-# without CONTROL to demonstrate the effect of tester characteristics without assigning tester pairs
-
-t9.9 <- felm(THIGHEDU.9 ~ APRACE, data = testers)
-
-t9.9.coef <- as.data.frame(coef(summary(t9.9)))
-names(t9.9.coef)[which(names(t9.9.coef) == "Estimate")] <- "Bachelor's Degree"
-t9.9.coef <- as.data.frame(t(t9.9.coef))
 
 
 # 10 = Attended Graduate / Professional School
@@ -1093,14 +867,6 @@ t9.10.coef <- as.data.frame(t(t9.10.coef))
 
 rm(t9.10)
 
-# without CONTROL to demonstrate the effect of tester characteristics without assigning tester pairs
-
-t9.10 <- felm(THIGHEDU.10 ~ APRACE, data = testers)
-
-t9.10.coef <- as.data.frame(coef(summary(t9.10)))
-names(t9.10.coef)[which(names(t9.10.coef) == "Estimate")] <- "Attended Graduate / Professional School"
-t9.10.coef <- as.data.frame(t(t9.10.coef))
-
 
 # 11 = Graduate / Professional Degree
 
@@ -1111,15 +877,6 @@ names(t9.11.coef)[which(names(t9.11.coef) == "Estimate")] <- "Graduate / Profess
 t9.11.coef <- as.data.frame(t(t9.11.coef))
 
 rm(t9.11)
-
-# without CONTROL to demonstrate the effect of tester characteristics without assigning tester pairs
-
-t9.11 <- felm(THIGHEDU.11 ~ APRACE, data = testers)
-
-t9.11.coef <- as.data.frame(coef(summary(t9.11)))
-names(t9.11.coef)[which(names(t9.11.coef) == "Estimate")] <- "Graduate / Professional Degree"
-t9.11.coef <- as.data.frame(t(t9.11.coef))
-
 
 # Generate table
 
@@ -1140,10 +897,6 @@ t9.coef <- rbind(t9.2.coef,
 
 t9.coef$APRACE5 <- NULL
 
-# Drop (Intercept)
-
-t9.coef$`(Intercept)` <- NULL
-
 # Convert into LaTeX using stargazer
 
 stargazer(t9.coef,
@@ -1155,19 +908,6 @@ stargazer(t9.coef,
                                "Hispanic",
                                "Asian"),
           out = paste0(out, "edu.tex"))
-
-# without CONTROL
-
-stargazer(t9.coef,
-          type = "latex",
-          title = "Balance Statistics for Advertised Homes by Race",
-          summary = FALSE,
-          df = FALSE,
-          covariate.labels = c("Variable",
-                               "African American",
-                               "Hispanic",
-                               "Asian"))
-
 
 
 # Homeowner ------------------------------------------------------------------------------------
@@ -1192,15 +932,6 @@ t10.1.coef <- as.data.frame(t(t10.1.coef))
 
 rm(t10.1)
 
-# without CONTROL to demonstrate the effect of tester characteristics without assigning tester pairs
-
-t10.1 <- felm(TCURTENR.1 ~ APRACE, data = testers)
-
-t10.1.coef <- as.data.frame(coef(summary(t10.1)))
-names(t10.1.coef)[which(names(t10.1.coef) == "Estimate")] <- "Percent Rented Home"
-t10.1.coef <- as.data.frame(t(t10.1.coef))
-
-
 # own home
 
 t10.2 <- felm(TCURTENR.2 ~ APRACE | CONTROL | 0 | CONTROL, data = testers)
@@ -1211,15 +942,6 @@ t10.2.coef <- as.data.frame(t(t10.2.coef))
 
 rm(t10.2)
 
-# without CONTROL to demonstrate the effect of tester characteristics without assigning tester pairs
-
-t10.2 <- felm(TCURTENR.2 ~ APRACE, data = testers)
-
-t10.2.coef <- as.data.frame(coef(summary(t10.2)))
-names(t10.2.coef)[which(names(t10.2.coef) == "Estimate")] <- "Percent Owned Home"
-t10.2.coef <- as.data.frame(t(t10.2.coef))
-
-
 # Generate table
 
 # Combine into one dataframe
@@ -1229,10 +951,6 @@ t10.coef <- rbind(t10.1.coef, t10.2.coef)
 # Drop race category 'Other'
 
 t10.coef$APRACE5 <- NULL
-
-# Drop (Intercept)
-
-t10.coef$`(Intercept)` <- NULL 
 
 # Convert into LaTeX using stargazer
 
@@ -1247,18 +965,6 @@ stargazer(t10.coef,
           out = paste0(out, "homeowner.tex"))
 
 
-# without CONTROL
-
-stargazer(t10.coef,
-          type = "latex",
-          title = "Balance Statistics for Advertised Homes by Race",
-          summary = FALSE,
-          df = FALSE,
-          covariate.labels = c("Variable",
-                               "African American",
-                               "Hispanic",
-                               "Asian"))
-
 
 # Length of Employment (Assigned) -------------------------------------------------------------------------
 
@@ -1270,25 +976,11 @@ t11.coef <- as.data.frame(t(t11.coef))
 
 rm(t11)
 
-# without CONTROL to demonstrate the effect of tester characteristics without assigning tester pairs
-
-t11 <- felm(AELNG1 ~ APRACE, data = testers)
-
-t11.coef <- as.data.frame(coef(summary(t11)))
-names(t11.coef)[which(names(t11.coef) == "Estimate")] <- "Length of Employment (Years)"
-t11.coef <- as.data.frame(t(t11.coef))
-
-
 # Generate table
 
 # Drop race category 'Other'
 
 t11.coef$APRACE5 <- NULL
-
-# without CONTROL
-# Drop (Intercept)
-
-t11.coef$`(Intercept)` <- NULL
 
 # Convert into LaTeX using stargazer
 
@@ -1301,18 +993,6 @@ stargazer(t11.coef,
                                "Hispanic",
                                "Asian"),
           out = paste0(out, "length_emp.tex"))
-
-# without CONTROL
-
-stargazer(t11.coef,
-          type = "latex",
-          title = "Balance Statistics for Advertised Homes by Race",
-          summary = FALSE,
-          df = FALSE,
-          covariate.labels = c("Variable",
-                               "African American",
-                               "Hispanic",
-                               "Asian"))
 
 
 # Down Payment Reason --------------------------------------------------------------------------
@@ -1402,26 +1082,11 @@ t13.coef <- as.data.frame(t(t13.coef))
 
 rm(t13)
 
-# without CONTROL to demonstrate the effect of tester characteristics without assigning tester pairs
-
-t13 <- felm(ALGNCUR ~ APRACE, data = testers)
-
-t13.coef <- as.data.frame(coef(summary(t13)))
-names(t13.coef)[which(names(t13.coef) == "Estimate")] <- "Years at Residence"
-t13.coef <- as.data.frame(t(t13.coef))
-
-
 # Generate table
 
 # Drop race category 'Other'
 
 t13.coef$APRACE5 <- NULL
-
-# without CONTROL
-# Drop (Intercept)
-
-t13.coef$`(Intercept)` <- NULL
-
 
 # Convert into LaTeX using stargazer
 
@@ -1434,18 +1099,6 @@ stargazer(t13.coef,
                                "Hispanic",
                                "Asian"),
           out = paste0(out, "length_res.tex"))
-
-# without CONTROL
-
-stargazer(t13.coef,
-          type = "latex",
-          title = "Balance Statistics for Advertised Homes by Race",
-          summary = FALSE,
-          df = FALSE,
-          covariate.labels = c("Variable",
-                               "African American",
-                               "Hispanic",
-                               "Asian"))
 
 # Lease Type -----------------------------------------------------------------------------------
 
@@ -1464,15 +1117,6 @@ t14.1.coef <- as.data.frame(t(t14.1.coef))
 
 rm(t14.1)
 
-# without CONTROL to demonstrate the effect of tester characteristics without assigning tester pairs
-
-t14.1 <- felm(ALEASETP.1 ~ APRACE, data = testers)
-
-t14.1.coef <- as.data.frame(coef(summary(t14.1)))
-names(t14.1.coef)[which(names(t14.1.coef) == "Estimate")] <- "Month-to-Month"
-t14.1.coef <- as.data.frame(t(t14.1.coef))
-
-
 # 2 = Lease 
 
 t14.2 <- felm(ALEASETP.2 ~ APRACE | CONTROL | 0 | CONTROL, data = testers)
@@ -1483,15 +1127,6 @@ t14.2.coef <- as.data.frame(t(t14.2.coef))
 
 rm(t14.2)
 
-# without CONTROL to demonstrate the effect of tester characteristics without assigning tester pairs
-
-t14.2 <- felm(ALEASETP.2 ~ APRACE, data = testers)
-
-t14.2.coef <- as.data.frame(coef(summary(t14.2)))
-names(t14.2.coef)[which(names(t14.2.coef) == "Estimate")] <- "Lease"
-t14.2.coef <- as.data.frame(t(t14.2.coef))
-
-
 # Generate table
 
 # Combine into one dataframe
@@ -1501,11 +1136,6 @@ t14.coef <- rbind(t14.1.coef, t14.2.coef)
 # Drop race category 'Other'
 
 t14.coef$APRACE5 <- NULL
-
-# without CONTROL
-# Drop (Intercept)
-
-t14.coef$`(Intercept)` <- NULL
 
 # Convert into LaTeX using stargazer
 
@@ -1518,20 +1148,6 @@ stargazer(t14.coef,
                                "Hispanic",
                                "Asian"),
           out = paste0(out, "lease.tex"))
-
-
-# without CONTROL
-
-stargazer(t14.coef,
-          type = "latex",
-          title = "Balance Statistics for Advertised Homes by Race",
-          summary = FALSE,
-          df = FALSE,
-          covariate.labels = c("Variable",
-                               "African American",
-                               "Hispanic",
-                               "Asian"))
-
 
 
 # Car Owner ------------------------------------------------------------------------------------
@@ -1550,24 +1166,12 @@ t15.coef <- as.data.frame(t(t15.coef))
 
 rm(t15)
 
-# without CONTROL to demonstrate the effect of tester characteristics without assigning tester pairs
-
-t15 <- felm(ACAROWN ~ APRACE, data = testers)
-
-t15.coef <- as.data.frame(coef(summary(t15)))
-names(t15.coef)[which(names(t15.coef) == "Estimate")] <- "Percent Car Owner"
-t15.coef <- as.data.frame(t(t15.coef))
-
 # Generate table
 
 # Drop race category 'Other'
 
 t15.coef$APRACE5 <- NULL
 
-# without CONTROL
-# Drop (Intercept)
-
-t15.coef$`(Intercept)` <- NULL
 
 # Convert into LaTeX using stargazer
 
@@ -1581,19 +1185,6 @@ stargazer(t15.coef,
                                "Asian"),
           out = paste0(out, "carown.tex"))
 
-# without CONTROL
-
-stargazer(t15.coef,
-          type = "latex",
-          title = "Balance Statistics for Advertised Homes by Race",
-          summary = FALSE,
-          df = FALSE,
-          covariate.labels = c("Variable",
-                               "African American",
-                               "Hispanic",
-                               "Asian"))
-
-
 
 # Monthly Rent ---------------------------------------------------------------------------------
 
@@ -1605,24 +1196,11 @@ t16.coef <- as.data.frame(t(t16.coef))
 
 rm(t16)
 
-# without CONTROL to demonstrate the effect of tester characteristics without assigning tester pairs
-
-t16 <- felm(ARENTNOW ~ APRACE, data = testers)
-
-t16.coef <- as.data.frame(coef(summary(t16)))
-names(t16.coef)[which(names(t16.coef) == "Estimate")] <- "Monthly Rent"
-t16.coef <- as.data.frame(t(t16.coef))
-
 # Generate table
 
 # Drop race category 'Other'
 
 t16.coef$APRACE5 <- NULL
-
-# without CONTROL
-# Drop (Intercept)
-
-t16.coef$`(Intercept)` <- NULL
 
 # Convert into LaTeX using stargazer
 
@@ -1635,19 +1213,6 @@ stargazer(t16.coef,
                                "Hispanic",
                                "Asian"),
           out = paste0(out, "rent.tex"))
-
-# without CONTROL
-
-stargazer(t16.coef,
-          type = "latex",
-          title = "Balance Statistics for Advertised Homes by Race",
-          summary = FALSE,
-          df = FALSE,
-          covariate.labels = c("Variable",
-                               "African American",
-                               "Hispanic",
-                               "Asian"))
-
 
 
 # Home and Neighborhood Characteristics --------------------------------------------------------
@@ -1663,20 +1228,6 @@ names(h1.coef)[which(names(h1.coef) == "Estimate")] <- "Listing Price"
 h1.coef <- as.data.frame(t(h1.coef))
 
 rm(h1)
-
-
-# without CONTROL to demonstrate the effect of house characteristics without assigning tester pairs
-
-h1 <- felm(AdPrice ~ APRACE, data = homes)
-
-h1.coef <- as.data.frame(coef(summary(h1)))
-names(h1.coef)[which(names(h1.coef) == "Estimate")] <- "Listing Price"
-h1.coef <- as.data.frame(t(h1.coef))
-
-# without CONTROL
-# Exclude (Intercept)
-
-h1.coef$`(Intercept)` <- NULL
 
 # Drop race category 'Other'
 
@@ -1696,18 +1247,6 @@ stargazer(h1.coef,
                                "Asian"),
           out = paste0(out, "adprice.tex"))
 
-
-# without CONTROL
-
-stargazer(h1.coef,
-          type = "latex",
-          title = "Balance Statistics for Advertised Homes by Race",
-          summary = FALSE,
-          df = FALSE,
-          covariate.labels = c("Variable",
-                               "African American",
-                               "Hispanic",
-                               "Asian"))
 
 
 # Home Type ------------------------------------------------------------------------------------
@@ -1730,14 +1269,6 @@ h2.1.coef <- as.data.frame(t(h2.1.coef))
 
 rm(h2.1)
 
-# without CONTROL to demonstrate the effect of house characteristics without assigning tester pairs
-
-h2.1 <- felm(HHMTYPE.1 ~ APRACE, data = homes)
-
-h2.1.coef <- as.data.frame(coef(summary(h2.1)))
-names(h2.1.coef)[which(names(h2.1.coef) == "Estimate")] <- "Single-family Detached"
-h2.1.coef <- as.data.frame(t(h2.1.coef))
-
 
 # 2 = Duplex
 
@@ -1749,15 +1280,6 @@ h2.2.coef <- as.data.frame(t(h2.2.coef))
 
 rm(h2.2)
 
-# without CONTROL to demonstrate the effect of house characteristics without assigning tester pairs
-
-h2.2 <- felm(HHMTYPE.2 ~ APRACE, data = homes)
-
-h2.2.coef <- as.data.frame(coef(summary(h2.2)))
-names(h2.2.coef)[which(names(h2.2.coef) == "Estimate")] <- "Duplex"
-h2.2.coef <- as.data.frame(t(h2.2.coef))
-
-
 # 3 = Rowhouse or Townhouse
 
 h2.3 <- felm(HHMTYPE.3 ~ APRACE | CONTROL | 0 | CONTROL, data = homes)
@@ -1767,14 +1289,6 @@ names(h2.3.coef)[which(names(h2.3.coef) == "Estimate")] <- "Rowhouse or Townhous
 h2.3.coef <- as.data.frame(t(h2.3.coef))
 
 rm(h2.3)
-
-# without CONTROL to demonstrate the effect of house characteristics without assigning tester pairs
-
-h2.3 <- felm(HHMTYPE.3 ~ APRACE, data = homes)
-
-h2.3.coef <- as.data.frame(coef(summary(h2.3)))
-names(h2.3.coef)[which(names(h2.3.coef) == "Estimate")] <- "Rowhouse or Townhouse"
-h2.3.coef <- as.data.frame(t(h2.3.coef))
 
 # 4 = Multi-family Structure
 
@@ -1786,15 +1300,6 @@ h2.4.coef <- as.data.frame(t(h2.4.coef))
 
 rm(h2.4)
 
-# without CONTROL to demonstrate the effect of house characteristics without assigning tester pairs
-
-h2.4 <- felm(HHMTYPE.4 ~ APRACE, data = homes)
-
-h2.4.coef <- as.data.frame(coef(summary(h2.4)))
-names(h2.4.coef)[which(names(h2.4.coef) == "Estimate")] <- "Multi-family Structure"
-h2.4.coef <- as.data.frame(t(h2.4.coef))
-
-
 # 5 = Mobile Home 
 
 h2.5 <- felm(HHMTYPE.5 ~ APRACE | CONTROL | 0 | CONTROL, data = homes)
@@ -1804,15 +1309,6 @@ names(h2.5.coef)[which(names(h2.5.coef) == "Estimate")] <- "Mobile Home"
 h2.5.coef <- as.data.frame(t(h2.5.coef))
 
 rm(h2.5)
-
-# without CONTROL to demonstrate the effect of house characteristics without assigning tester pairs
-
-h2.5 <- felm(HHMTYPE.5 ~ APRACE, data = homes)
-
-h2.5.coef <- as.data.frame(coef(summary(h2.5)))
-names(h2.5.coef)[which(names(h2.5.coef) == "Estimate")] <- "Mobile Home"
-h2.5.coef <- as.data.frame(t(h2.5.coef))
-
 
 # Generate table
 
@@ -1828,12 +1324,6 @@ h2.coef <- rbind(h2.1.coef,
 
 h2.coef$APRACE5 <- NULL
 
-# without CONTROL
-# Exclude (Intercept)
-
-h2.coef$`(Intercept)` <- NULL
-
-
 # Convert into LaTeX using stargazer
 
 stargazer(h2.coef,
@@ -1845,19 +1335,6 @@ stargazer(h2.coef,
                                "Hispanic",
                                "Asian"),
           out = paste0(out, "htype.tex"))
-
-# without CONTROL
-
-stargazer(h2.coef,
-          type = "latex",
-          title = "Balance Statistics for Advertised Homes by Race",
-          summary = FALSE,
-          df = FALSE,
-          covariate.labels = c("Variable",
-                               "African American",
-                               "Hispanic",
-                               "Asian"))
-
 
 
 # Time of Test (AM) ----------------------------------------------------------------------------
@@ -1876,26 +1353,11 @@ h3.coef <- as.data.frame(t(h3.coef))
 
 rm(h3)
 
-# without CONTROL to demonstrate the effect of house characteristics without assigning tester pairs
-
-h3 <- felm(SAPPTAM.1 ~ APRACE, data = homes)
-
-h3.coef <- as.data.frame(coef(summary(h3)))
-names(h3.coef)[which(names(h3.coef) == "Estimate")] <- "Time of Test (AM)"
-h3.coef <- as.data.frame(t(h3.coef))
-
-
 # Generate table
 
 # Drop race category 'Other'
 
 h3.coef$APRACE5 <- NULL
-
-# without CONTROL
-# Exclude (Intercept)
-
-h3.coef$`(Intercept)` <- NULL
-
 
 # Convert into LaTeX using stargazer
 
@@ -1908,21 +1370,6 @@ stargazer(h3.coef,
                                "Hispanic",
                                "Asian"),
           out = paste0(out, "SAPPTAM.tex"))
-
-# without CONTROL
-
-stargazer(h3.coef,
-          type = "latex",
-          title = "Balance Statistics for Advertised Homes by Race",
-          summary = FALSE,
-          df = FALSE,
-          covariate.labels = c("Variable",
-                               "African American",
-                               "Hispanic",
-                               "Asian"))
-
-
-
 
 # Pollution Measurements in Advertised Homes ---------------------------------------------------
 
